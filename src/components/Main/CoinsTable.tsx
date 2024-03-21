@@ -9,7 +9,7 @@ import ModalForm from '../Coin/Modal/ModalForm';
 import BuyButton from './BuyButton'
 
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { preSetPortfolio, setPortfolio } from '@/lib/store/features/portfolio/portfolioSlice';
+import { setPortfolio } from '@/lib/store/features/portfolio/portfolioSlice';
 import { searchCoin } from '@/lib/store/features/search/searchSilce';
 
 type DataTableItemType = {

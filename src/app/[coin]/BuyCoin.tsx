@@ -4,8 +4,12 @@ import { Button, Flex } from 'antd';
 import { useForm } from 'antd/es/form/Form'
 import React from 'react'
 
-//type
-export default function BuyCoin({ data }) {
+type PropsType = {
+    data: {
+        [key: string]: string
+    }
+}
+export default function BuyCoin({ data }: PropsType) {
 
     const [form] = useForm();
 
