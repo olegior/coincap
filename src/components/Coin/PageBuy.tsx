@@ -16,10 +16,13 @@ export default function PageBuy({ data }: PropsType) {
 
     const [form] = useForm();
     const dispatch = useAppDispatch();
-
     const handleBuyClick = () => {
-        const payload = { [data.name]: form.getFieldsValue() };
-        // dispatch(setPortfolio(payload));
+        const payload = {
+            [data.name]: {
+                ...form.getFieldsValue(),
+                price: +(+data.priceUsd).toFixed(2)
+            }
+        };
         dispatch(buyCoin(payload));
         form.resetFields();
     }

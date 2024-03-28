@@ -41,8 +41,12 @@ export default function CoinsTable({ dataSource }: PropsType) {
       icon: <WalletOutlined style={{ color: 'black' }} />,
       onOk: () => {
         const { name, price } = coin;
-        const payload = { [name]: { ...form.getFieldsValue(), price: +price } };
-        // dispatch(setPortfolio(payload));
+        const payload = {
+          [name]: {
+            ...form.getFieldsValue(),
+            price: +price
+          }
+        };
         dispatch(buyCoin(payload))
         form.resetFields();
       },
