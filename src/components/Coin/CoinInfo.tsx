@@ -1,4 +1,5 @@
-import { CoinAssetType } from "@/types";
+import { priceToFixed } from "@/lib/helpers/priceToFixed";
+import { CoinAssetType } from "@/lib/types";
 import { Descriptions, Table } from "antd";
 
 type PropsType = {
@@ -26,13 +27,13 @@ export default function CoinInfo({ data }: PropsType) {
         { key: rank, label: 'Рейтинг', children: rank },
         { key: name, label: 'Валюта', children: name },
         { key: symbol, label: 'Обозначение', children: symbol },
-        { key: supply, label: 'Доступно', children: supply },
-        { key: maxSupply, label: 'Максимум доступно', children: maxSupply },
-        { key: capitalization, label: 'Капитализация, $', children: capitalization },
-        { key: price, label: 'Цена, $', children: price },
+        { key: supply, label: 'Доступно', children: priceToFixed(supply) },
+        { key: maxSupply, label: 'Максимум доступно', children: priceToFixed(maxSupply) },
+        { key: capitalization, label: 'Капитализация, $', children: priceToFixed(capitalization) },
+        { key: price, label: 'Цена, $', children: priceToFixed(price) },
         { key: change, label: 'Изменение, %', children: change },
-        { key: volume, label: 'Объем, $ за 24 часа', children: volume },
-        { key: vwap24Hr, label: 'VWAP, $ за 24 часа', children: vwap24Hr },
+        { key: volume, label: 'Объем, $ за 24 часа', children: priceToFixed(volume) },
+        { key: vwap24Hr, label: 'VWAP, $ за 24 часа', children: priceToFixed(vwap24Hr) },
         { key: explorer, label: 'Сайт', children: <a target="_blank" href={explorer} >{explorer}</a> },
     ]
 

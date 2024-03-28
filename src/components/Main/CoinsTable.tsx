@@ -2,22 +2,16 @@
 import { Form, Modal, Table } from 'antd'
 import { WalletOutlined } from '@ant-design/icons';
 import type { TableColumnsType } from 'antd';
-
 import { useRouter } from 'next/navigation'
-
 import ModalForm from '../Coin/Modal/ModalForm';
 import BuyButton from './BuyButton'
-
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { setPortfolio } from '@/lib/store/features/portfolio/portfolioSlice';
+import { buyCoin } from '@/lib/store/features/portfolio/portfolioSlice';
 import { searchCoin } from '@/lib/store/features/search/searchSilce';
-
-type DataTableItemType = {
-  [key: string]: string,
-}
+import { TableCoinAssetType } from '@/lib/types';
 
 type PropsType = {
-  dataSource: DataTableItemType[]
+  dataSource: TableCoinAssetType[]
 }
 
 export default function CoinsTable({ dataSource }: PropsType) {
@@ -29,7 +23,7 @@ export default function CoinsTable({ dataSource }: PropsType) {
   const search = useAppSelector(state => state.search).toLowerCase();
   const dispatch = useAppDispatch();
 
-  const filterCoins = (coin: DataTableItemType) => {
+  const filterCoins = (coin: TableCoinAssetType) => {
     const { name, symbol } = coin;
     return name.toLowerCase().includes(search) || symbol.toLowerCase().includes(search)
   }
@@ -38,18 +32,18 @@ export default function CoinsTable({ dataSource }: PropsType) {
     ? dataSource.filter(filterCoins)
     : dataSource;
 
-  const modalHandler = (coin: { [key: string]: string }) => {
+  const modalHandler = (coin: TableCoinAssetType) => {
     modal.confirm({
-
       centered: true,
       content: <ModalForm data={coin} form={form} />,
       okText: 'Купить',
       cancelText: 'Отмена',
       icon: <WalletOutlined style={{ color: 'black' }} />,
       onOk: () => {
-        const payload = { [coin.name]: form.getFieldsValue() };
-        dispatch(setPortfolio(payload));
-        // dispatch(preSetPortfolio(payload));
+        const { name, price } = coin;
+        const payload = { [name]: { ...form.getFieldsValue(), price: +price } };
+        // dispatch(setPortfolio(payload));
+        dispatch(buyCoin(payload))
         form.resetFields();
       },
       onCancel: () => {
@@ -58,17 +52,17 @@ export default function CoinsTable({ dataSource }: PropsType) {
     })
   }
 
-  const columns: TableColumnsType<DataTableItemType> = [
+  const columns: TableColumnsType<TableCoinAssetType> = [
     {
       title: 'Валюта', dataIndex: 'title', key: 'title',
-      render: (_, record: DataTableItemType) => {
+      render: (_, record: TableCoinAssetType) => {
         const name = record.title.split(' ');
         return <span>{name[0]} <span style={{ color: 'darkgoldenrod' }}>{name[1]}</span></span>
       },
     },
     {
       title: 'Стоимость, $', dataIndex: 'price', key: 'price',
-      sorter: (a: DataTableItemType, b: DataTableItemType) => {
+      sorter: (a: TableCoinAssetType, b: TableCoinAssetType) => {
         return (+a.price) - (+b.price)
       },
     },
@@ -77,19 +71,19 @@ export default function CoinsTable({ dataSource }: PropsType) {
     { title: 'Объем, 24ч', dataIndex: 'volume', key: 'volume', responsive: ['md'] },
     {
       title: 'Изменение, %', dataIndex: 'change', key: 'change',
-      render: (_, record: DataTableItemType) => {
+      render: (_, record: TableCoinAssetType) => {
         const color = +record.change > 0 ? 'lawngreen' : 'red'
         const title = +record.change > 0 ? `+${record.change}` : record.change
         return <span style={{ color }}>{title}</span >
       },
-      sorter: (a: DataTableItemType, b: DataTableItemType) => {
+      sorter: (a: TableCoinAssetType, b: TableCoinAssetType) => {
         return (+a.change) - (+b.change)
       },
       responsive: ['md']
     },
     {
       title: 'Купить', dataIndex: 'buy', key: 'buy',
-      render: (_, record: DataTableItemType) => <BuyButton
+      render: (_, record: TableCoinAssetType) => <BuyButton
         coin={record} modalHandler={modalHandler} />,
     },
   ]

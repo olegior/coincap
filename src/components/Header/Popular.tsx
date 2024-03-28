@@ -1,38 +1,38 @@
 import { getCoinsAssets } from "@/lib/helpers/api";
-import { CoinAssetType } from "@/types";
+import { CoinAssetType } from "@/lib/types";
 import { Descriptions } from "antd";
 import { priceToFixed } from "@/lib/helpers/priceToFixed";
+import Link from "next/link";
 
 type DescriptionItemType = {
   key: string,
-  label: string,
+  label: React.ReactElement,
   children: string,
-  response?: string[]
 }
 
 const setDescriptionItem = (element: CoinAssetType): DescriptionItemType => {
 
-  const { rank, name, priceUsd } = element
+  const { rank, name, priceUsd, id } = element
   const price = priceToFixed(priceUsd)
 
   return {
     key: rank,
-    label: name,
+    label: <Link href={id}>{name}</Link>,
     children: `${price} $`,
   }
 }
 
-const getPopular = async () => {
-  return await getCoinsAssets(3, 0)
-}
-
 export default async function Popular() {
 
-  const data = (await getPopular()).map(el => setDescriptionItem(el))
+  const data = (await getCoinsAssets(3, 0)).map(el => setDescriptionItem(el))
 
   return (
     <Descriptions className="header__popular"
-      items={data} size="small"
-      contentStyle={{ wordBreak: 'keep-all', width:'fit-content'}} />
+      items={data}
+      size="small"
+      column={{ xs: 1, md: 3 }}
+      labelStyle={{ backgroundColor: 'transparent' }}
+      contentStyle={{ wordBreak: 'keep-all' }}
+    />
   )
 }

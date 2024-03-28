@@ -1,12 +1,10 @@
-import { CoinHistoryType, HistoryIntervalType } from "@/types";
+import { getCoinHistory } from "@/lib/helpers/api";
+import { CoinHistoryType, HistoryIntervalType } from "@/lib/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getHistoryData = createAsyncThunk('historyData/get',
     async ({ id, interval }: { id: string, interval: HistoryIntervalType }) => {
-        const response = (await (
-            await fetch(`https://api.coincap.io/v2/assets/${id}/history?interval=${interval}`))
-            .json()).data;
-        return response
+        return await getCoinHistory(id, interval)
     }
 )
 
@@ -15,7 +13,6 @@ type SliceType = {
     isLoading: boolean,
     error: string | undefined
 }
-
 
 const initialState: SliceType = {
     data: [],

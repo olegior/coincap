@@ -2,7 +2,7 @@
 import { getHistoryData } from '@/lib/store/features/historyData/historyDataSlice';
 import { setHistoryInterval } from '@/lib/store/features/historyInterval/historyIntervalSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { HistoryIntervalType } from '@/types';
+import { HistoryIntervalType } from '@/lib/types';
 import { Line } from "@ant-design/plots";
 import { Flex, Select, Spin } from 'antd';
 import { useEffect } from 'react';
@@ -58,8 +58,7 @@ export default function CoinChart({ coin }: PropsType) {
 
     return (
         <Spin spinning={isLoading} size='large'
-            indicator={<LoadingOutlined style={{ fontSize: 24 }} />}
-        >
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} />}        >
             <Flex vertical gap={30} >
                 <Flex justify='flex-end'>
                     <Select options={selectOptions}
@@ -67,10 +66,10 @@ export default function CoinChart({ coin }: PropsType) {
                         size='large'
                         onChange={handleChangeInterval} />
                 </Flex>
-                {!!data.length ?
-                    <Line {...config} /> :
-                    <Flex justify='center' align='center'>
-                        <Title level={3}>Нет данных для построения графика</Title>
+                {!!data.length
+                    ? <Line {...config} />
+                    : <Flex justify='center' align='center'>
+                        <Title type='secondary' level={3}>Нет данных для построения графика</Title>
                     </ Flex>}
             </Flex>
         </Spin>

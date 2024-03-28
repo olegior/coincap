@@ -8,14 +8,10 @@ import { HomeOutlined } from '@ant-design/icons';
 export default async function AppHeader() {
     return (
         <Flex className={'header'} justify="space-between" align="center"      >
-            <Button type="text">
-                <Link href={'/'}>
-                    {<HomeOutlined style={{ fontSize: 24 }} />}
-                </Link>
-            </Button>
-
+            <Link href={'/'} style={{ padding: 10 }}>
+                <HomeOutlined style={{ fontSize: 24 }} />
+            </Link>
             <Popular />
-
             <Portfolio />
         </Flex>
     )

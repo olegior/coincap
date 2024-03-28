@@ -1,4 +1,5 @@
-import { Col, Form, FormInstance, Input, InputNumber, Row } from 'antd'
+import { getLength, getQuantityStep, getSumStep } from '@/lib/helpers/priceToFixed'
+import { Col, Form, FormInstance, InputNumber, Row } from 'antd'
 import FormItem from 'antd/es/form/FormItem'
 
 type PropsType = {
@@ -8,11 +9,10 @@ type PropsType = {
     form: FormInstance
 }
 export default function BuyForm({ data, form }: PropsType) {
-    const price = +data.price;
-
-    const length = Math.trunc(price).toString().length - 1;
-    const quantityStep = +(10 ** (-length)).toFixed(length);
-    const sumStep = +(price / 10 ** length).toFixed(2);
+    const price = +data.price
+    const length = getLength(price);
+    const quantityStep = getQuantityStep(length);
+    const sumStep = getSumStep(price, length);
 
     const handleInput = (prop: string, length: number) => {
         return (value: number | string | null) => {
@@ -34,7 +34,6 @@ export default function BuyForm({ data, form }: PropsType) {
         form.setFieldValue('sum', +(quanitity * price).toFixed(2))
     }
 
-
     return (
         <Form form={form} layout='inline' size='large' style={{ paddingBlock: 30 }}>
             <Row>
@@ -51,10 +50,6 @@ export default function BuyForm({ data, form }: PropsType) {
                             prefix='$'
                             size='large'
                             onPressEnter={handleSumOnEnter}
-                        // formatter={(value) => value?.toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ')}
-                        // parser={(value) => +(value.replace(/\s+/g, ''))}
-                        // formatter={(value) => value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                        // parser={(value) => value?.toString()!.replace(/\$\s?|(,*)/g, '')}
                         />
                     </FormItem>
                 </Col>

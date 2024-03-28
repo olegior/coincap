@@ -1,14 +1,11 @@
 "use client"
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalStaticFunctions } from 'antd/es/modal/confirm';
+import { TableCoinAssetType } from '@/lib/types';
 
 type PropsType = {
-    coin: {
-        [key: string]: string
-    },
-    // modal?: Omit<ModalStaticFunctions, 'warn'>;
-    modalHandler: (coin: { [key: string]: string }) => void
+    coin: TableCoinAssetType
+    modalHandler: (coin: TableCoinAssetType) => void
 
 }
 export default function BuyButton({ coin, modalHandler }: PropsType) {
@@ -19,6 +16,6 @@ export default function BuyButton({ coin, modalHandler }: PropsType) {
     }
 
     return (
-        <Button onClick={handleClick}><PlusOutlined /></Button>
+        <Button onClick={handleClick} ><PlusOutlined /></Button>
     )
 }

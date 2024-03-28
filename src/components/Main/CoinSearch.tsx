@@ -1,10 +1,10 @@
 "use client"
 import { searchCoin } from '@/lib/store/features/search/searchSilce'
 import { useAppDispatch } from '@/lib/store/hooks'
-import { Space } from 'antd'
-import Search from 'antd/es/input/Search'
+import { Input, Space } from 'antd'
 import { debounce } from 'lodash'
 import React, { ChangeEvent } from 'react'
+import { SearchOutlined } from '@ant-design/icons';
 
 export default function CoinSearch() {
 
@@ -18,17 +18,14 @@ export default function CoinSearch() {
         debouncedSearch(event.target.value)
     }
 
-    const handleSearch = (value: string) => {
-        dispatch(searchCoin(value))
-    }
-
     return (
         <Space>
-            <Search
-                onSearch={handleSearch}
-                allowClear={true}
-                placeholder='введите название...' size='large'
+            <Input
                 onChange={handleChange}
+                placeholder='введите название...'
+                size='large'
+                allowClear={true}
+                prefix={<SearchOutlined />}
             />
         </Space>
     )

@@ -1,4 +1,4 @@
-import { HistoryIntervalType } from "@/types";
+import { HistoryIntervalType } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: HistoryIntervalType = 'd1'

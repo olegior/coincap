@@ -2,16 +2,16 @@ import { Suspense } from "react";
 import { Flex } from "antd";
 import { getCoinsAssets } from '@/lib/helpers/api'
 import { priceToFixed } from "@/lib/helpers/priceToFixed";
-import { CoinAssetType } from '@/types'
-import Spinner from "@/components/Spinner";
+import { CoinAssetType, TableCoinAssetType } from '@/lib/types'
+import Spinner from "@/components/Spinner/Spinner";
 import CoinSearch from "@/components/Main/CoinSearch";
 import CoinsTable from "@/components/Main/CoinsTable";
 
-const getAllCoins = async () => {
+const getAllCoins = async (): Promise<TableCoinAssetType[]> => {
   const coins = await getCoinsAssets(1000);
 
   const dataSource = coins
-    .map((coin: CoinAssetType) => {
+    .map((coin: CoinAssetType): TableCoinAssetType => {
       const {
         name,
         symbol,

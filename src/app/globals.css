@@ -1,13 +1,35 @@
 :root {
-  --color-main: #1C0F13;
-  --color-accent: #B7CECE;
-  --color-second: #f5f5f5;
+  --color-main: #0B3954;
+  --color-accent: #FF6663;
+  --color-second: #BFD7EA;
 }
 
-body {
-  background-color: var(--color-second);
-
+.buy-button--hover {
+  background-color: var(--color-accent);
+  fill: currentColor;
 }
+
+a,
+a:visited,
+a:active,
+a:link,
+a svg {
+  color: var(--color-main);
+  fill: currentColor;
+}
+
+/* цвет?*/
+.header a:hover,
+.header svg:hover {
+  color: var(--color-accent);
+  fill: currentColor;
+}
+
+.pointer {
+  cursor: pointer;
+  user-select: none;
+}
+
 
 .content {
   max-width: 1200px;
@@ -19,16 +41,21 @@ body {
 }
 
 .header {
-  padding: 20px;
+  padding-block: 20px;
+  padding-inline: 40px;
   border-bottom: 1px solid lightgray;
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.1);
   gap: 20px;
   max-height: 105px;
+  /* background: var(--color-second); */
 }
 
 .header__popular {
   max-width: 500px;
+  user-select: none;
 }
+
+/* .portfolio  */
 
 @media (max-width: 540px) {
   .header {
@@ -36,94 +63,16 @@ body {
     gap: 5px;
   }
 
-  .header__popular {
-    max-width: 150px;
-  }
+  /* .header__popular {
+    max-width: 200px;
+    display: none;
+  } */
 }
 
-.pointer {
-  cursor: pointer;
-  user-select: none;
-}
+
+/* .pointer:hover {
+  background-color: var(--color-accent)
+} */
 
 
 /* loader */
-.loader {
-  width: 80px;
-  height: 80px;
-  color: #000000;
-  display: grid;
-}
-
-.loader::before,
-.loader::after {
-  content: "";
-  grid-area: 1/1;
-  --c: linear-gradient(currentColor 0 0);
-  background:
-    var(--c) 0 0,
-    var(--c) 100% 0,
-    var(--c) 100% 100%,
-    var(--c) 0 100%;
-  background-repeat: no-repeat;
-  animation:
-    l10-1 1s infinite linear,
-    l10-2 1s infinite linear;
-}
-
-.loader::after {
-  margin: 20px;
-  transform: scale(-1);
-}
-
-@keyframes l10-1 {
-  0% {
-    background-size: 0 8px, 8px 0, 0 8px, 8px 0
-  }
-
-  12.5% {
-    background-size: 100% 8px, 8px 0, 0 8px, 8px 0
-  }
-
-  25% {
-    background-size: 100% 8px, 8px 100%, 0 8px, 8px 0
-  }
-
-  37.5% {
-    background-size: 100% 8px, 8px 100%, 100% 8px, 8px 0
-  }
-
-  45%,
-  55% {
-    background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%
-  }
-
-  62.5% {
-    background-size: 0 8px, 8px 100%, 100% 8px, 8px 100%
-  }
-
-  75% {
-    background-size: 0 8px, 8px 0, 100% 8px, 8px 100%
-  }
-
-  87.5% {
-    background-size: 0 8px, 8px 0, 0 8px, 8px 100%
-  }
-
-  100% {
-    background-size: 0 8px, 8px 0, 0 8px, 8px 0
-  }
-}
-
-@keyframes l10-2 {
-
-  0%,
-  49.9% {
-    background-position: 0 0, 100% 0, 100% 100%, 0 100%
-  }
-
-  50%,
-  100% {
-    background-position: 100% 0, 100% 100%, 0 100%, 0 0
-  }
-}

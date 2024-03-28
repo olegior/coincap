@@ -1,17 +1,20 @@
-import { CoinAssetType, CoinHistoryType, CoinMarketType, CoinRateType, HistoryIntervalType } from "@/types";
+import { CoinAssetType, CoinHistoryType, HistoryIntervalType } from "@/lib/types";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: process.env.ENDPOINT,
+    // baseURL: process.env.ENDPOINT,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
-        'Accept-Encoding': 'gzip',
+        // 'Accept-Encoding': 'gzip',
         Authorization: `Bearer ${process.env.API_KEY}`
     }
 })
 
 api.interceptors.response.use((response) => {
-    if (!(response.statusText === 'OK'))
-        return [];
+    // console.log(response);
+    
+    // // if (!(response.statusText === 'OK'))
+    // //     return [];
     return response.data.data
 })
 
@@ -31,10 +34,10 @@ export const getCoinHistory = (id: string, interval: HistoryIntervalType): Promi
     return api.get(`assets/${id}/history?interval=${interval}`)
 }
 
-export const getCoinMarkets = (id: string): Promise<CoinMarketType[]> => {
-    return api.get(`assets/${id}/markets`)
-}
+// export const getCoinMarkets = (id: string): Promise<CoinMarketType[]> => {
+//     return api.get(`assets/${id}/markets?limit=5`)
+// }
 
-export const getCoinRates = (id: string): Promise<CoinRateType[]> => {
-    return api.get(`rates/${id}`)
-}
+// export const getCoinRates = (id: string): Promise<CoinRateType[]> => {
+//     return api.get(`rates/${id}`)
+// }
