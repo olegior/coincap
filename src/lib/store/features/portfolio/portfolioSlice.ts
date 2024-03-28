@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { sumCoins } from "./sumCoins";
+import { calcChange, sumCoins } from "./sumCoins";
 import { getLocalData, setLocalData } from "@/lib/helpers/storage";
 import { CoinsSliceType } from "@/lib/types";
 import { getCoinsAssets } from "@/lib/helpers/api";
@@ -29,14 +29,9 @@ const updatePortfolio = createAsyncThunk('updatePortfolio',
         const previousSum = sumCoins(prevCoins)
         const currentSum = sumCoins(coins)
 
-        const sum = (currentSum - previousSum).toFixed(2);
-        const percent = +sum ? ((100 / (previousSum / currentSum)) - 100).toFixed(2) : 0
-
-        const change = `$${sum} 
-        ${percent}%`
         dispatch(setCoins(coins));
         dispatch(setTotal(currentSum))
-        dispatch(setChange(change))
+        dispatch(setChange(calcChange(previousSum, currentSum)))
     }
 )
 
