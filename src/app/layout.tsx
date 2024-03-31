@@ -7,7 +7,7 @@ import '@a1rth/css-normalize';
 import "./globals.css";
 import StoreProvider from "@/lib/store/StoreProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin","cyrillic"] });
 
 export const metadata: Metadata = {
   title: "Currency | Coincap",
