@@ -1,5 +1,6 @@
 import { CoinAssetType, CoinHistoryType, HistoryIntervalType } from "@/lib/types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { notFound } from "next/navigation";
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,10 +11,14 @@ const api = axios.create({
 
 api.interceptors.response.use((response) => {
     return response.data.data
-})
+}, (err: AxiosError) => {
+    if (err.response?.status === 404)
+        notFound()
+}
+)
 
-export const getCoinsAssets = (limit?: number, offset?: number): Promise<CoinAssetType[]> => {
-    if (limit || offset) {
+export const getCoinsAssets = (limit?: number): Promise<CoinAssetType[]> => {
+    if (limit) {
         return api.get(`assets?limit=${limit}`)
     }
     return api.get('assets')
@@ -27,6 +32,6 @@ export const getCoinHistory = (id: string, interval: HistoryIntervalType): Promi
     return api.get(`assets/${id}/history?interval=${interval}`)
 }
 
-export const webSocket = (coins: string) => {   
+export const webSocket = (coins: string) => {
     return new WebSocket(`wss://ws.coincap.io/prices?assets=${coins}`)
 }

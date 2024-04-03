@@ -8,7 +8,7 @@ type PropsType = {
     },
     form: FormInstance
 }
-export default function BuyForm({ data, form }: PropsType) {
+export default function InputForm({ data, form }: PropsType) {
     const price = +data.price
     const length = getLength(price);
     const quantityStep = getQuantityStep(length);
@@ -35,10 +35,10 @@ export default function BuyForm({ data, form }: PropsType) {
     }
 
     return (
-        <Form form={form} layout='inline' size='large' style={{ paddingBlock: 30 }}>
-            <Row>
+        <Form form={form} layout='horizontal' size='large'>
+            <Row gutter={16}>
                 <Col span={12}>
-                    <FormItem name="sum">
+                    <FormItem name="sum" rules={[{ required: true, message: "Введите сумму" }]}>
                         <InputNumber
                             type='number'
                             min={sumStep}
@@ -50,11 +50,12 @@ export default function BuyForm({ data, form }: PropsType) {
                             prefix='$'
                             size='large'
                             onPressEnter={handleSumOnEnter}
+
                         />
                     </FormItem>
                 </Col>
                 <Col span={12}>
-                    <FormItem name="quantity"            >
+                    <FormItem name="quantity" rules={[{ required: true, message: "Введите количество" }]}>
                         <InputNumber
                             type='number'
                             min={quantityStep}
@@ -69,6 +70,6 @@ export default function BuyForm({ data, form }: PropsType) {
                     </FormItem>
                 </Col>
             </Row>
-        </Form>
+        </Form >
     )
 }

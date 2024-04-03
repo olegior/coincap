@@ -32,8 +32,8 @@ export default function CoinInfo({ data }: PropsType) {
         { key: capitalization, label: 'Капитализация, $', children: priceToFixed(capitalization) },
         { key: price, label: 'Цена, $', children: priceToFixed(price) },
         { key: change, label: 'Изменение, %', children: change },
-        { key: volume, label: 'Объем, $ за 24 часа', children: priceToFixed(volume) },
-        { key: vwap24Hr, label: 'VWAP, $ за 24 часа', children: priceToFixed(vwap24Hr) },
+        { key: volume, label: 'Объем, $ за 24 ч.', children: priceToFixed(volume) },
+        { key: vwap24Hr, label: 'VWAP, $ за 24 ч.', children: priceToFixed(vwap24Hr) },
         { key: explorer, label: 'Сайт', children: <a target="_blank" href={explorer} >{explorer}</a> },
     ]
 
