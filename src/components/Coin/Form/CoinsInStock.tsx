@@ -11,7 +11,7 @@ type PropsType = {
 export default function CoinsInStock({ name, symbol, fontSize }: PropsType) {
     const coin = useAppSelector(state => state.portfolio.coins[name])
     if (!coin?.quantity) {
-        return <></>
+        return null
     }
     return (
         <Text style={{ paddingInline: 10, fontSize }}>

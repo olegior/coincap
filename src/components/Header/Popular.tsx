@@ -22,7 +22,7 @@ const setDescriptionItem = (element: CoinAssetType): DescriptionItemType => {
   return {
     key: rank,
     label: <Link href={id}>{name}</Link>,
-    children: `${price} $`,
+    children: `${price}$`,
   }
 }
 

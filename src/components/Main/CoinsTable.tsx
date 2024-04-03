@@ -3,7 +3,7 @@ import { Form, Modal, Table } from 'antd'
 import { WalletOutlined } from '@ant-design/icons';
 import type { TableColumnsType } from 'antd';
 import { useRouter } from 'next/navigation'
-import ModalForm from '../Coin/Modal/ModalForm';
+import TableButForm from '../Coin/Modal/TableButForm';
 import BuyButton from './BuyButton'
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import { buyCoin } from '@/lib/store/features/portfolio/portfolioSlice';
@@ -35,20 +35,23 @@ export default function CoinsTable({ dataSource }: PropsType) {
   const modalHandler = (coin: TableCoinAssetType) => {
     modal.confirm({
       centered: true,
-      content: <ModalForm data={coin} form={form} />,
+      content: <TableButForm data={coin} form={form} />,
       okText: 'Купить',
       cancelText: 'Отмена',
       icon: <WalletOutlined style={{ color: 'black' }} />,
       onOk: () => {
         const { name, price } = coin;
-        const payload = {
-          [name]: {
-            ...form.getFieldsValue(),
-            price: +price
-          }
-        };
-        dispatch(buyCoin(payload))
-        form.resetFields();
+        const { sum, quantity } = form.getFieldsValue()
+        if (sum && quantity) {
+          const payload = {
+            [name]: {
+              sum, quantity,
+              price: +price
+            }
+          };
+          dispatch(buyCoin(payload))
+          form.resetFields();
+        }
       },
       onCancel: () => {
         form.resetFields();
@@ -71,7 +74,7 @@ export default function CoinsTable({ dataSource }: PropsType) {
       },
     },
     { title: 'Предложение', dataIndex: 'supply', key: 'supply', responsive: ['md'] },
-    { title: 'Капитализация, $', dataIndex: 'capitalization', key: 'capitalization', responsive: ['md'] },
+    { title: 'Капитализация, $', dataIndex: 'capitalization', key: 'capitalization', responsive: ['lg'] },
     { title: 'Объем, 24ч', dataIndex: 'volume', key: 'volume', responsive: ['md'] },
     {
       title: 'Изменение, %', dataIndex: 'change', key: 'change',
@@ -83,7 +86,7 @@ export default function CoinsTable({ dataSource }: PropsType) {
       sorter: (a: TableCoinAssetType, b: TableCoinAssetType) => {
         return (+a.change) - (+b.change)
       },
-      responsive: ['md']
+      responsive: ['sm']
     },
     {
       title: 'Купить', dataIndex: 'buy', key: 'buy',

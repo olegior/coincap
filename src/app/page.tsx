@@ -42,7 +42,8 @@ export default async function HomePage() {
 
   return (
     <Suspense fallback={<Spinner />}>
-      <Flex vertical gap={20} align="center">
+      <Flex vertical gap={20} align="center" justify="center"
+        style={{ paddingTop: 20 }}>
         <CoinSearch />
         <CoinsTable dataSource={dataSource} />
       </Flex>
